@@ -49,14 +49,14 @@ public class Program
     }
 
     // Get lesser angle in degress between hours arrow and minutes arrow
-    private static double GetAngle(int hour, int minutes)
+    private static int GetAngle(int hour, int minutes)
     {
         // Convert "hour arrow" to "minute arrow"
         int hourInMinutesRange = hour % HourTicksInClock * HourTickWorthInMinutes;
 
         // Convert hour and minutes into degrees
-        double hourInDegrees = hourInMinutesRange * OneMinuteWorthInDegrees;
-        double minutesInDegrees = minutes * OneMinuteWorthInDegrees;
+        int hourInDegrees = hourInMinutesRange * OneMinuteWorthInDegrees;
+        int minutesInDegrees = minutes * OneMinuteWorthInDegrees;
 
         return Math.Min(Math.Abs((360 - (hourInDegrees - minutesInDegrees)) % 360),
                         Math.Abs((360 - (minutesInDegrees - hourInDegrees)) % 360));
@@ -85,7 +85,7 @@ public class Program
             minutesString = Console.ReadLine();
         }
 
-        double angle = GetAngle(Convert.ToInt32(hourString), Convert.ToInt32(minutesString));
+        int angle = GetAngle(Convert.ToInt32(hourString), Convert.ToInt32(minutesString));
         Console.WriteLine($"The lesser angle between hour: {hourString} and minutes: {minutesString} is: {angle} degrees.");
     }
 }
