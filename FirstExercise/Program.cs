@@ -4,11 +4,20 @@ public class Program
     private const int OneMinuteWorthInDegrees = 360 / 60;
     private const int HourTicksInClock = 12;
     private const int MinutesTicksInClock = 60;
+    // How much ticks does minutes hour has between 2 hours. 
     private const int HourTickWorthInMinutes = MinutesTicksInClock / HourTicksInClock;
+    // How much degrees hour arrow rotates because of minutes. For example if the time is 2:30, the hour arrow points in the middle of between 2 and 3 hours
+    private const int HourArrowOffset = MinutesTicksInClock / HourTickWorthInMinutes; 
 
     // Hour validation
     private static bool IsHourValid(string hourString)
     {
+        // Check if user's input is not empty
+        if (String.IsNullOrEmpty(hourString))
+        {
+            Console.WriteLine("You must enter something!");
+            return false;
+        }
         // Check if the value user has entered contains non-digit characters
         if (hourString.Where(x => !Char.IsDigit(x)).Any())
         {
@@ -30,6 +39,12 @@ public class Program
     // Minutes validation
     private static bool IsMinutesValid(string minutesString)
     {
+        // Check if user's input is not empty
+        if (String.IsNullOrEmpty(minutesString))
+        {
+            Console.WriteLine("You must enter something!");
+            return false;
+        }
         // Check if the value user has entered contains non-digit characters
         if (minutesString.Where(x => !Char.IsDigit(x)).Any())
         {
@@ -52,7 +67,7 @@ public class Program
     private static int GetAngle(int hour, int minutes)
     {
         // Convert "hour arrow" to "minute arrow"
-        int hourInMinutesRange = hour % HourTicksInClock * HourTickWorthInMinutes;
+        int hourInMinutesRange = (hour % HourTicksInClock * HourTickWorthInMinutes) + (minutes / HourArrowOffset);
 
         // Convert hour and minutes into degrees
         int hourInDegrees = hourInMinutesRange * OneMinuteWorthInDegrees;
